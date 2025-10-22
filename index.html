@@ -2,134 +2,138 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rock City - Born to Bleed Style. Welcome to Rock City – Where Style Meets Rock!">
-    <meta name="keywords" content="Rock City, Rock Shop, estilo rock, ropa rock, accesorios rock">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Rock City | Born to Bleed Style - Tienda de accesorios y perforaciones con estilo rebelde">
+    <meta name="keywords" content="Rock City, Rock Shop, estilo rock, ropa rock, accesorios rock, perforaciones, tattoos">
     <meta name="author" content="Rock City">
     <meta name="theme-color" content="#E60000">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Rock City - Born to Bleed Style">
-    <meta property="og:description" content="Welcome to Rock City – Where Style Meets Rock!">
+    <meta property="og:title" content="Rock City | Born to Bleed Style">
+    <meta property="og:description" content="Tienda de accesorios y perforaciones con estilo rebelde">
     <meta property="og:image" content="logo.png">
     <meta property="og:url" content="https://yourusername.github.io/rockcity/">
     <meta property="og:type" content="website">
 
-    <title>Rock City - Born to Bleed Style</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <title>Rock City | Born to Bleed Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
-    <!-- Loading screen -->
+    <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
-        <div class="loader-logo">ROCK CITY</div>
-        <div class="loader-bar"></div>
+        <div class="loading-content">
+            <h1 class="loading-title">ROCK CITY</h1>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+            <p class="loading-subtitle">Born to Bleed Style</p>
+        </div>
     </div>
 
-    <!-- Header with logo -->
-    <header class="header">
-        <img src="logo.png" alt="Rock City Logo" class="logo">
+    <!-- Header Video Section -->
+    <header class="header-video">
+        <video class="header-bg-video" autoplay muted loop playsinline>
+            <source src="korn.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+
+        <div class="header-content">
+            <h1 class="main-title">
+                <span class="title-line">BORN TO</span>
+                <span class="title-line highlight">BLEED</span>
+                <span class="title-line">STYLE</span>
+            </h1>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <span>Scroll</span>
+        </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero section with parallax -->
-        <section id="hero" class="hero">
-            <div class="hero-content">
-                <!-- Hero text moved below buttons -->
+    <!-- Hero Image Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-image-wrapper">
+                <img src="portada.png" alt="Rock City Hero" class="hero-image">
+                <div class="hero-glow"></div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Dashboard section with video background -->
-        <section class="dashboard-section">
-            <video class="background-video" autoplay muted loop playsinline>
-                <source src="kornmovil.mp4" type="video/mp4" media="(min-width: 769px)">
-                <source src="kornmovil.mp4" type="video/mp4" media="(max-width: 768px)">
-                Your browser does not support the video tag.
-            </video>
-            <div class="video-overlay"></div>
+    <!-- Action Buttons Section -->
+    <section class="action-section">
+        <div class="action-container">
+            <div class="action-buttons-grid">
+                <a href="tel:+527774808222" class="action-btn primary-btn">
+                    <div class="btn-icon">📞</div>
+                    <div class="btn-content">
+                        <span class="btn-title">LLAMAR AHORA</span>
+                        <span class="btn-subtitle">+52 777 480 8222</span>
+                    </div>
+                    <div class="btn-ripple"></div>
+                </a>
 
-            <div class="button-container">
-                <!-- Social Media Buttons -->
-                <div class="social-buttons">
-                    <a href="https://www.facebook.com/profile.php?id=61582657080200"
-                       class="social-btn facebook"
-                       target="_blank">
-                        <span>Facebook</span>
-                    </a>
-                    <a href="https://www.instagram.com/luisfernandomsnver?igsh=dnV2azd3dGU5aWEw"
-                       class="social-btn instagram"
-                       target="_blank">
-                        <span>Instagram</span>
-                    </a>
-                    <a href="https://www.tiktok.com/@rockcitygear/video/7563835389656583436"
-                       class="social-btn tiktok"
-                       target="_blank">
-                        <span>TikTok</span>
-                    </a>
+                <a href="https://wa.me/527774808222?text=Hola%20Rock%20City%2C%20quiero%20agendar%20una%20cita"
+                   class="action-btn secondary-btn"
+                   target="_blank">
+                    <div class="btn-icon">💀</div>
+                    <div class="btn-content">
+                        <span class="btn-title">AGENDAR CITA</span>
+                        <span class="btn-subtitle">WhatsApp</span>
+                    </div>
+                    <div class="btn-ripple"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Video Section -->
+    <footer class="footer-video">
+        <video class="footer-bg-video" autoplay muted loop playsinline>
+            <source src="kornmovil.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="footer-overlay"></div>
+
+        <div class="footer-content">
+            <div class="footer-info">
+                <h2 class="footer-title">ROCK CITY</h2>
+                <p class="footer-tagline">Born to Bleed Style</p>
+                <div class="contact-info">
+                    <p>📞 +52 777 480 8222</p>
+                    <p>📍 México</p>
                 </div>
-
-                <!-- Action Buttons -->
-                <div class="action-buttons">
-                    <a href="tel:+527774808222" class="action-btn call-btn">
-                        📞 LLAMAR
-                    </a>
-                    <button class="action-btn contact-btn" id="contact-btn">
-                        👤 AGREGAR CONTACTO
-                    </button>
-                    <a href="https://maps.app.goo.gl/PNRWFZFusDoS6X4i9"
-                       class="action-btn location-btn"
-                       target="_blank">
-                        📍 UBICACIÓN
-                    </a>
-                    <a href="https://wa.me/527774808222?text=Hola%20Rock%20City%2C%20quiero%20agendar%20una%20cita"
-                       class="action-btn whatsapp-btn"
-                       target="_blank">
-                        📱 AGENDAR CITA
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Hero Title Section with Parallax (moved below buttons) -->
-        <section class="hero-title-section">
-            <div class="container">
-                <h1 class="hero-title">
-                    <span class="title-main">ROCK CITY</span>
-                    <span class="title-sub">ROCK SHOP</span>
-                    <span class="title-tagline">BORN TO BLEED STYLE</span>
-                </h1>
-            </div>
-        </section>
-
-        <!-- Skull Video Section -->
-        <section id="skull" class="skull-section parallax-section animated-section">
-            <div class="container">
-                <div class="skull-video-container">
-                    <video class="skull-video"
-                           autoplay
-                           loop
-                           muted
-                           playsinline
-                           preload="metadata">
-                        <source src="kornmovil.mp4" type="video/mp4" media="(min-width: 769px)">
-                        <source src="kornmovil.mp4" type="video/mp4" media="(max-width: 768px)">
-                    </video>
-                    <!-- Overlay effects -->
-                    <div class="smoke-overlay"></div>
-                    <div class="particle-overlay"></div>
-                    <div class="particles-container"></div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61582657080200" target="_blank">Facebook</a>
+                    <a href="https://www.instagram.com/luisfernandomsnver" target="_blank">Instagram</a>
+                    <a href="https://www.tiktok.com/@rockcitygear" target="_blank">TikTok</a>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </footer>
 
     <!-- Background Music -->
-    <audio id="background-music" autoplay loop>
+    <audio id="background-music" loop volume="0.3">
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Music Control Button -->
-    <button id="music-toggle" class="music-control">🔊</button>
+    <!-- Music Toggle -->
+    <button id="music-toggle" class="music-toggle" aria-label="Toggle Music">
+        <span class="music-icon">🔊</span>
+    </button>
 
     <script src="script.js"></script>
 </body>

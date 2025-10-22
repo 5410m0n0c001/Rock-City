@@ -1,352 +1,420 @@
 // ========================================
 // ROCK CITY - BORN TO BLEED STYLE
-// JavaScript functionality - Fixed and Optimized
+// Enhanced with GSAP Animations
 // ========================================
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all features
     initLoadingScreen();
+    initGSAPAnimations();
     initBackgroundMusic();
-    initContactFeatures();
-    initScrollAnimations();
     initInteractiveEffects();
-    initVideoPlayback(); // Fix video playback issues
+    initScrollEffects();
+    initPerformanceOptimizations();
 });
 
 // ========================================
-// LOADING SCREEN
+// LOADING SCREEN WITH GSAP
 // ========================================
 function initLoadingScreen() {
     const loadingScreen = document.getElementById('loading-screen');
-    const loaderBar = document.querySelector('.loader-bar');
+    const loadingTitle = document.querySelector('.loading-title');
+    const loadingBar = document.querySelector('.loading-bar');
+    const loadingSubtitle = document.querySelector('.loading-subtitle');
 
-    // Simulate loading progress
-    let progress = 0;
-    const progressInterval = setInterval(() => {
-        progress += Math.random() * 20;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(progressInterval);
-            // Hide loading screen after completion
-            setTimeout(() => {
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 500);
-            }, 500);
-        }
-        loaderBar.style.width = progress + '%';
-    }, 100);
+    // GSAP Timeline for loading animations
+    const loadingTL = gsap.timeline();
+
+    loadingTL
+        .to(loadingTitle, {
+            duration: 0.8,
+            y: 0,
+            opacity: 1,
+            ease: "back.out(1.7)"
+        })
+        .to(loadingBar, {
+            duration: 2,
+            width: "100%",
+            ease: "power2.inOut"
+        }, "-=0.5")
+        .to(loadingSubtitle, {
+            duration: 0.5,
+            opacity: 1,
+            y: 0,
+            ease: "power2.out"
+        }, "-=0.3")
+        .to(loadingScreen, {
+            duration: 1,
+            opacity: 0,
+            ease: "power2.inOut",
+            onComplete: () => {
+                loadingScreen.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }, "+=0.5");
 }
 
 // ========================================
-// BACKGROUND MUSIC WITH AUTOPLAY FALLBACK
+// GSAP ANIMATIONS
+// ========================================
+function initGSAPAnimations() {
+    // Register ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Header video parallax
+    gsap.to('.header-bg-video', {
+        scrollTrigger: {
+            trigger: '.header-video',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 0.3
+        },
+        yPercent: 30,
+        ease: 'none'
+    });
+
+    // Hero image scale animation
+    gsap.from('.hero-image', {
+        scrollTrigger: {
+            trigger: '.hero-section',
+            start: 'top 80%',
+            end: 'bottom 20%',
+            scrub: 0.5
+        },
+        scale: 0.8,
+        opacity: 0.7,
+        ease: 'none'
+    });
+
+    // Action buttons staggered animation
+    gsap.from('.action-btn', {
+        scrollTrigger: {
+            trigger: '.action-section',
+            start: 'top 70%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 0.8,
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+        ease: 'back.out(1.7)'
+    });
+
+    // Footer video parallax
+    gsap.to('.footer-bg-video', {
+        scrollTrigger: {
+            trigger: '.footer-video',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.3
+        },
+        yPercent: 20,
+        ease: 'none'
+    });
+
+    // Floating elements
+    gsap.to('.main-title .highlight', {
+        duration: 3,
+        rotationY: 360,
+        repeat: -1,
+        ease: 'none'
+    });
+
+    // Continuous floating animation for scroll indicator
+    gsap.to('.scroll-indicator', {
+        duration: 2,
+        y: 10,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power2.inOut'
+    });
+}
+
+// ========================================
+// BACKGROUND MUSIC WITH AUTOPLAY
 // ========================================
 function initBackgroundMusic() {
     const backgroundMusic = document.getElementById('background-music');
     const musicToggle = document.getElementById('music-toggle');
+    let isMusicPlaying = false;
 
-    // Attempt autoplay
-    const playPromise = backgroundMusic.play();
+    // Set initial volume
+    backgroundMusic.volume = 0.3;
 
-    if (playPromise !== undefined) {
-        playPromise.catch(error => {
-            console.log('Autoplay blocked, waiting for user interaction');
-            // Play on first user interaction
-            const playOnInteraction = () => {
-                backgroundMusic.play();
-                document.body.removeEventListener('click', playOnInteraction);
-                document.body.removeEventListener('touchstart', playOnInteraction);
-                document.body.removeEventListener('keydown', playOnInteraction);
+    // Auto-play with user interaction fallback
+    const playMusic = async () => {
+        try {
+            await backgroundMusic.play();
+            isMusicPlaying = true;
+            musicToggle.innerHTML = '🔊';
+            console.log('🎵 Music started');
+        } catch (error) {
+            console.log('Autoplay blocked, waiting for interaction');
+            // Add event listeners for user interaction
+            const interactionHandler = async () => {
+                try {
+                    await backgroundMusic.play();
+                    isMusicPlaying = true;
+                    musicToggle.innerHTML = '🔊';
+                    console.log('🎵 Music started after interaction');
+                    // Remove listeners after successful play
+                    ['click', 'touchstart', 'keydown'].forEach(event => {
+                        document.removeEventListener(event, interactionHandler);
+                    });
+                } catch (retryError) {
+                    console.log('Failed to play music:', retryError);
+                }
             };
 
-            document.body.addEventListener('click', playOnInteraction);
-            document.body.addEventListener('touchstart', playOnInteraction);
-            document.body.addEventListener('keydown', playOnInteraction);
-        });
-    }
+            ['click', 'touchstart', 'keydown'].forEach(event => {
+                document.addEventListener(event, interactionHandler, { once: true });
+            });
+        }
+    };
+
+    // Initialize music
+    playMusic();
 
     // Music toggle functionality
-    musicToggle.addEventListener('click', function() {
-        if (backgroundMusic.muted) {
-            backgroundMusic.muted = false;
-            musicToggle.textContent = '🔊';
-        } else {
-            backgroundMusic.muted = true;
-            musicToggle.textContent = '🔇';
+    musicToggle.addEventListener('click', async () => {
+        try {
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+                musicToggle.innerHTML = '🔇';
+                isMusicPlaying = false;
+            } else {
+                await backgroundMusic.play();
+                musicToggle.innerHTML = '🔊';
+                isMusicPlaying = true;
+            }
+        } catch (error) {
+            console.log('Music toggle failed:', error);
         }
     });
 }
 
 // ========================================
-// VIDEO PLAYBACK FIXES (RESPONSIVE)
-// ========================================
-function initVideoPlayback() {
-    // Handle background video (kornmovil.mp4 / kornmovil.mp4)
-    const backgroundVideo = document.querySelector('.background-video');
-    if (backgroundVideo) {
-        backgroundVideo.play().catch(error => {
-            console.log('Background video autoplay failed:', error);
-            const playOnInteraction = () => {
-                backgroundVideo.play().catch(e => console.log('Background video manual play failed:', e));
-                document.body.removeEventListener('click', playOnInteraction);
-                document.body.removeEventListener('touchstart', playOnInteraction);
-            };
-            document.body.addEventListener('click', playOnInteraction);
-            document.body.addEventListener('touchstart', playOnInteraction);
-        });
-
-        backgroundVideo.addEventListener('error', function() {
-            console.log('Background video failed to load');
-            this.parentElement.style.background = 'linear-gradient(45deg, #000, #333)';
-        });
-    }
-
-    // Handle skull video (kornmovil.mp4 / kornmovil.mp4)
-    const skullVideo = document.querySelector('.skull-video');
-    if (skullVideo) {
-        skullVideo.play().catch(error => {
-            console.log('Skull video autoplay failed:', error);
-            const playOnInteraction = () => {
-                skullVideo.play().catch(e => console.log('Skull video manual play failed:', e));
-                document.body.removeEventListener('click', playOnInteraction);
-                document.body.removeEventListener('touchstart', playOnInteraction);
-            };
-            document.body.addEventListener('click', playOnInteraction);
-            document.body.addEventListener('touchstart', playOnInteraction);
-        });
-
-        skullVideo.addEventListener('error', function() {
-            console.log('Skull video failed to load');
-            this.parentElement.style.background = 'linear-gradient(45deg, #000, #333)';
-        });
-    }
-
-    // Ensure responsive video loading
-    function handleSourceChange() {
-        const videos = document.querySelectorAll('video');
-        videos.forEach(video => {
-            // Force video to load the correct source based on screen size
-            const sources = video.querySelectorAll('source');
-            sources.forEach(source => {
-                if (source.media && window.matchMedia(source.media).matches) {
-                    if (video.currentSrc !== source.src) {
-                        video.src = source.src;
-                        video.load();
-                    }
-                }
-            });
-        });
-    }
-
-    // Handle screen resize for responsive videos
-    window.addEventListener('resize', handleSourceChange);
-    handleSourceChange(); // Initial load
-}
-
-// ========================================
-// CONTACT FEATURES
-// ========================================
-function initContactFeatures() {
-    // vCard generation for "Agregar Contacto" button
-    document.getElementById('contact-btn').addEventListener('click', function() {
-        const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:Rock City Gear
-ORG:Rock City Rock Shop
-TEL:+527774808222
-URL:https://www.facebook.com/profile.php?id=61582657080200
-URL:https://www.instagram.com/luisfernandomsnver
-URL:https://www.tiktok.com/@rockcitygear
-ADR:;;México;;México
-NOTE:Born to Bleed Style
-END:VCARD`;
-
-        const blob = new Blob([vcard], { type: 'text/vcard' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'RockCity.vcf';
-        link.click();
-        URL.revokeObjectURL(url);
-    });
-}
-
-// ========================================
-// SCROLL ANIMATIONS (FIXED)
-// ========================================
-function initScrollAnimations() {
-    // Use requestAnimationFrame for smooth parallax
-    let ticking = false;
-
-    function updateParallax() {
-        const scrolled = window.pageYOffset;
-        const hero = document.querySelector('.hero');
-        const heroTitle = document.querySelector('.hero-title');
-        const buttonContainer = document.querySelector('.button-container');
-        const socialButtons = document.querySelector('.social-buttons');
-        const actionButtons = document.querySelector('.action-buttons');
-
-        if (hero) {
-            // Hero background parallax
-            const heroRate = scrolled * -0.5;
-            hero.style.transform = `translate3d(0, ${heroRate}px, 0)`;
-        }
-
-        if (heroTitle) {
-            // Title text parallax (slower)
-            const titleRate = scrolled * -0.2;
-            heroTitle.style.transform = `translate3d(0, ${titleRate}px, 0)`;
-        }
-
-        if (buttonContainer) {
-            // Button container parallax
-            const buttonRate = scrolled * -0.1;
-            buttonContainer.style.transform = `translate3d(0, ${buttonRate}px, 0)`;
-        }
-
-        if (socialButtons) {
-            // Social buttons container parallax
-            const socialRate = scrolled * -0.15;
-            socialButtons.style.transform = `translate3d(0, ${socialRate}px, 0)`;
-        }
-
-        if (actionButtons) {
-            // Action buttons container parallax
-            const actionRate = scrolled * -0.12;
-            actionButtons.style.transform = `translate3d(0, ${actionRate}px, 0)`;
-        }
-
-        // Intersection Observer for button animations (works on mobile too)
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    // Add flip-flap animation class with slight delay for mobile
-                    setTimeout(() => {
-                        entry.target.classList.add('flip-flap-animate');
-                    }, 100);
-                }
-            });
-        }, {
-            threshold: 0.1, // Lower threshold for mobile
-            rootMargin: '50px' // Trigger earlier on mobile
-        });
-
-        // Observe all buttons for flip-flap animation
-        document.querySelectorAll('.social-btn, .action-btn').forEach((btn, index) => {
-            // Add delay based on index for wave effect
-            btn.style.animationDelay = `${index * 0.1}s`;
-            observer.observe(btn);
-        });
-
-        // Title section observer
-        const titleSection = document.querySelector('.hero-title-section');
-        if (titleSection) {
-            const titleObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const titleElements = entry.target.querySelectorAll('.title-main, .title-sub, .title-tagline');
-                        titleElements.forEach((element, index) => {
-                            setTimeout(() => {
-                                element.style.transform = 'translate3d(0, 0, 0)';
-                                element.style.opacity = '1';
-                            }, index * 200);
-                        });
-                    }
-                });
-            }, { threshold: 0.3 });
-            titleObserver.observe(titleSection);
-        }
-
-        ticking = false;
-    }
-
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    }
-
-    // Throttled scroll listener for better performance
-    window.addEventListener('scroll', requestTick);
-
-    // Initial button states with hardware acceleration
-    const allBtns = document.querySelectorAll('.social-btn, .action-btn');
-    allBtns.forEach((btn, index) => {
-        // Set initial state for animations - ensure buttons are always visible and clickable
-        btn.style.transform = 'translate3d(0, 0, 0)';
-        btn.style.opacity = '1';
-        btn.style.transformOrigin = 'center center';
-        btn.style.animationDelay = `${index * 0.1}s`;
-        btn.style.willChange = 'transform, opacity';
-        btn.style.pointerEvents = 'auto';
-        btn.style.position = 'relative';
-        btn.style.zIndex = '10';
-        btn.style.visibility = 'visible';
-        btn.style.display = 'flex';
-
-        // Ensure buttons work on mobile
-        if ('ontouchstart' in window) {
-            btn.style.minHeight = '48px';
-            btn.style.touchAction = 'manipulation';
-        }
-    });
-
-    // Initial title states with hardware acceleration
-    const titleElements = document.querySelectorAll('.title-main, .title-sub, .title-tagline');
-    titleElements.forEach(element => {
-        element.style.transform = 'translate3d(0, 30px, 0)';
-        element.style.opacity = '0';
-        element.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-        element.style.willChange = 'transform, opacity';
-    });
-}
-
-// ========================================
-// INTERACTIVE EFFECTS (SIMPLIFIED)
+// INTERACTIVE EFFECTS
 // ========================================
 function initInteractiveEffects() {
-    // Simple hover effects for social buttons
-    document.querySelectorAll('.social-btn').forEach(btn => {
-        btn.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.05) translateY(-2px)';
-            this.style.boxShadow = '0 8px 20px rgba(255,0,0,0.5)';
-        });
-
-        btn.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1) translateY(0)';
-            this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
-        });
-    });
-
-    // Simple hover effects for action buttons
+    // Button ripple effect
     document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const ripple = this.querySelector('.btn-ripple');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('active');
+
+            setTimeout(() => {
+                ripple.classList.remove('active');
+            }, 600);
+        });
+
+        // Enhanced hover effects
         btn.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.05) translateY(-2px)';
-            this.style.filter = 'brightness(1.1)';
+            gsap.to(this, {
+                duration: 0.3,
+                scale: 1.05,
+                rotationY: 5,
+                ease: 'power2.out'
+            });
         });
 
         btn.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1) translateY(0)';
-            this.style.filter = 'brightness(1)';
+            gsap.to(this, {
+                duration: 0.3,
+                scale: 1,
+                rotationY: 0,
+                ease: 'power2.out'
+            });
         });
     });
 
-    // Simple click effects
-    document.querySelectorAll('.social-btn, .action-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            // Simple click feedback
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-            }, 150);
-
-            // Ensure links work properly
-            if (this.tagName === 'A' && this.href) {
-                console.log('Link clicked:', this.href);
-            }
+    // Hero image hover effect
+    const heroImage = document.querySelector('.hero-image');
+    if (heroImage) {
+        heroImage.addEventListener('mouseenter', function() {
+            gsap.to(this, {
+                duration: 0.5,
+                scale: 1.05,
+                ease: 'power2.out'
+            });
         });
+
+        heroImage.addEventListener('mouseleave', function() {
+            gsap.to(this, {
+                duration: 0.5,
+                scale: 1,
+                ease: 'power2.out'
+            });
+        });
+    }
+
+    // Music toggle pulse animation
+    gsap.to('.music-toggle', {
+        duration: 2,
+        scale: 1.1,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power2.inOut'
+    });
+}
+
+// ========================================
+// SCROLL EFFECTS
+// ========================================
+function initScrollEffects() {
+    // Parallax for header video
+    ScrollTrigger.create({
+        trigger: '.header-video',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.3,
+        onUpdate: (self) => {
+            const video = document.querySelector('.header-bg-video');
+            if (video) {
+                gsap.set(video, {
+                    y: self.progress * 100
+                });
+            }
+        }
+    });
+
+    // Hero section animations
+    ScrollTrigger.create({
+        trigger: '.hero-section',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        onEnter: () => {
+            gsap.to('.hero-image', {
+                duration: 1,
+                scale: 1,
+                opacity: 1,
+                ease: 'back.out(1.7)'
+            });
+        },
+        onLeaveBack: () => {
+            gsap.to('.hero-image', {
+                duration: 0.5,
+                scale: 0.9,
+                opacity: 0.8,
+                ease: 'power2.out'
+            });
+        }
+    });
+
+    // Action buttons entrance animation
+    ScrollTrigger.create({
+        trigger: '.action-section',
+        start: 'top 70%',
+        onEnter: () => {
+            gsap.fromTo('.action-btn',
+                {
+                    y: 100,
+                    opacity: 0,
+                    rotationX: -45
+                },
+                {
+                    duration: 0.8,
+                    y: 0,
+                    opacity: 1,
+                    rotationX: 0,
+                    stagger: 0.2,
+                    ease: 'back.out(1.7)'
+                }
+            );
+        }
+    });
+
+    // Footer parallax
+    ScrollTrigger.create({
+        trigger: '.footer-video',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 0.3,
+        onUpdate: (self) => {
+            const video = document.querySelector('.footer-bg-video');
+            if (video) {
+                gsap.set(video, {
+                    y: self.progress * 50
+                });
+            }
+        }
+    });
+}
+
+// ========================================
+// PERFORMANCE OPTIMIZATIONS
+// ========================================
+function initPerformanceOptimizations() {
+    // Video loading optimization
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        // Pause videos when not in viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    video.play().catch(e => console.log('Video play failed:', e));
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.25 });
+
+        observer.observe(video);
+
+        // Error handling
+        video.addEventListener('error', function() {
+            console.log('Video failed to load:', this.src);
+            this.style.display = 'none';
+        });
+    });
+
+    // Image loading optimization
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        img.loading = 'lazy';
+
+        img.addEventListener('error', function() {
+            console.log('Image failed to load:', this.src);
+            this.style.display = 'none';
+        });
+    });
+
+    // Network-aware optimizations
+    if ('connection' in navigator) {
+        const connection = navigator.connection;
+
+        if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+            // Reduce animation complexity on slow connections
+            gsap.globalTimeline.timeScale(0.5);
+
+            // Reduce video quality
+            videos.forEach(video => {
+                video.playbackRate = 0.5;
+            });
+        }
+
+        if (connection.saveData) {
+            // Disable non-essential animations
+            gsap.killTweensOf('.main-title .highlight');
+            gsap.killTweensOf('.scroll-indicator');
+        }
+    }
+
+    // Resize handler with debouncing
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            ScrollTrigger.refresh();
+        }, 250);
     });
 }
 
@@ -354,19 +422,16 @@ function initInteractiveEffects() {
 // UTILITY FUNCTIONS
 // ========================================
 
-// Error handling for media loading
-function handleMediaError(mediaElement, fallback) {
-    mediaElement.addEventListener('error', function() {
-        console.log('Media failed to load:', this.src);
-        if (fallback) fallback();
-    });
-}
-
 // Performance monitoring
 function logPerformance() {
     if (window.performance) {
         const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-        console.log('Page load time:', loadTime + 'ms');
+        console.log('🚀 Rock City loaded in:', loadTime + 'ms');
+
+        // Log Core Web Vitals if available
+        if ('web-vitals' in window) {
+            console.log('📊 Performance metrics available');
+        }
     }
 }
 
@@ -374,126 +439,86 @@ function logPerformance() {
 window.addEventListener('load', logPerformance);
 
 // ========================================
-// CSS FOR RIPPLE EFFECT
+// EASTER EGGS & SURPRISES
 // ========================================
-const rippleCSS = `
-.ripple {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(0);
-    animation: ripple-animation 0.6s linear;
-    pointer-events: none;
-}
 
-@keyframes ripple-animation {
-    to {
-        transform: scale(4);
-        opacity: 0;
+// Konami code easter egg
+let konami = [];
+const konamiCode = [
+    'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+    'KeyB', 'KeyA'
+];
+
+document.addEventListener('keydown', (e) => {
+    konami.push(e.code);
+    if (konami.length > konamiCode.length) {
+        konami.shift();
     }
-}
-`;
 
-// Add ripple CSS to document
-const style = document.createElement('style');
-style.textContent = rippleCSS;
-document.head.appendChild(style);
+    if (konami.join('') === konamiCode.join('')) {
+        console.log('🎮 Konami code activated!');
+        // Add a fun surprise effect
+        gsap.to('body', {
+            duration: 0.1,
+            repeat: 10,
+            yoyo: true,
+            backgroundColor: '#ff0000',
+            ease: 'power2.inOut'
+        });
+    }
+});
 
-console.log('🤘 Rock City - Born to Bleed Style - Loaded Successfully!');
+// Console welcome message
+console.log(`
+🤘 Welcome to Rock City - Born to Bleed Style! 🤘
+
+Built with:
+- GSAP for animations
+- Modern CSS with custom properties
+- Mobile-first responsive design
+- Performance optimizations
+- Accessibility features
+
+Ready to rock? 🎸
+`);
 
 // ========================================
-// BUTTON FUNCTIONALITY TEST
+// MOBILE OPTIMIZATIONS
 // ========================================
-function testButtonFunctionality() {
-    // Test all social and action buttons
-    const socialBtns = document.querySelectorAll('.social-btn');
+function initMobileOptimizations() {
+    // Enhanced touch support
     const actionBtns = document.querySelectorAll('.action-btn');
 
-    console.log(`Found ${socialBtns.length} social buttons`);
-    console.log(`Found ${actionBtns.length} action buttons`);
-
-    // Add click event listeners with logging
-    socialBtns.forEach((btn, index) => {
-        btn.addEventListener('click', (e) => {
-            console.log(`Social button ${index} clicked:`, btn.href || btn.textContent);
-        });
-    });
-
-    actionBtns.forEach((btn, index) => {
-        btn.addEventListener('click', (e) => {
-            console.log(`Action button ${index} clicked:`, btn.href || btn.textContent);
-        });
-    });
-}
-
-// Test button functionality after a short delay
-setTimeout(testButtonFunctionality, 1000);
-
-// ========================================
-// ENSURE BUTTONS ARE ALWAYS VISIBLE
-// ========================================
-function ensureButtonVisibility() {
-    // Force all buttons to be visible
-    const allBtns = document.querySelectorAll('.social-btn, .action-btn');
-    allBtns.forEach(btn => {
-        btn.style.opacity = '1';
-        btn.style.visibility = 'visible';
-        btn.style.display = 'flex';
-        btn.style.pointerEvents = 'auto';
-        btn.style.zIndex = '10';
-    });
-
-    console.log(`Ensured visibility for ${allBtns.length} buttons`);
-}
-
-// Ensure visibility after animations complete
-setTimeout(ensureButtonVisibility, 2000);
-
-// ========================================
-// MOBILE TOUCH SUPPORT (FIXED)
-// ========================================
-function initMobileSupport() {
-    // Ensure buttons work on mobile devices
-    const allBtns = document.querySelectorAll('.social-btn, .action-btn');
-
-    allBtns.forEach(btn => {
-        // Add touch event support for better mobile interaction
-        btn.addEventListener('touchstart', function(e) {
-            // Prevent double-tap zoom and ensure click works
-            e.preventDefault();
-            // Add visual feedback for touch
-            this.style.transform = 'scale(0.95) translateY(-2px)';
-            this.style.boxShadow = '0 6px 15px rgba(0,0,0,0.4)';
-        }, { passive: false });
-
+    actionBtns.forEach(btn => {
+        // Prevent double-tap zoom
         btn.addEventListener('touchend', function(e) {
             e.preventDefault();
-            // Reset visual state after touch
-            setTimeout(() => {
-                this.style.transform = 'scale(1) translateY(0)';
-                this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
-            }, 150);
-        }, { passive: false });
 
-        // Ensure proper hit area on mobile
+            // Add haptic feedback if available
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        });
+
+        // Improve touch targets
         if ('ontouchstart' in window) {
-            btn.style.minHeight = '48px';
-            btn.style.minWidth = '48px';
-            btn.style.display = 'flex';
-            btn.style.alignItems = 'center';
-            btn.style.justifyContent = 'center';
+            btn.style.minHeight = '60px';
+            btn.style.minWidth = '60px';
             btn.style.touchAction = 'manipulation';
-            btn.style.WebkitTapHighlightColor = 'rgba(255, 0, 0, 0.3)';
         }
-
-        // Ensure buttons are always clickable
-        btn.style.cursor = 'pointer';
-        btn.style.pointerEvents = 'auto';
-        btn.style.zIndex = '10';
     });
 
-    console.log(`Mobile support initialized for ${allBtns.length} buttons`);
+    // Smooth scrolling for iOS
+    document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Prevent horizontal scroll
+    document.body.addEventListener('touchmove', (e) => {
+        if (e.target === document.body) {
+            e.preventDefault();
+        }
+    }, { passive: false });
 }
 
-// Initialize mobile support
-initMobileSupport();
+// Initialize mobile optimizations
+initMobileOptimizations();
