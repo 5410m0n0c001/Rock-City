@@ -26,10 +26,14 @@ END:VCARD`;
 // Background Music Playback
 document.addEventListener('DOMContentLoaded', function() {
     const audio = document.getElementById('background-music');
-    audio.play().catch(function(e) {
+    audio.play().then(function() {
+        audio.muted = false; // Unmute after play starts
+    }).catch(function(e) {
         // If autoplay fails, play on first user interaction
         document.addEventListener('click', function() {
-            audio.play();
+            audio.play().then(function() {
+                audio.muted = false;
+            });
         }, { once: true });
     });
 });
