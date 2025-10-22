@@ -1,0 +1,242 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Impact', 'Bebas Neue', sans-serif;
+    background-color: #000000;
+    color: #FF0000;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Header */
+header {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+/* Hero Section with Parallax */
+.hero {
+    height: 100vh;
+    background-image: url('portada.png');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #FF0000;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+}
+
+.hero p {
+    font-size: 1.5rem;
+}
+
+/* Content Section */
+.content {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #0a0a0a;
+}
+
+/* Social Media Buttons */
+.social-media {
+    margin-bottom: 40px;
+}
+
+.social-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px;
+    background-color: #FF0000;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+}
+
+.social-btn:hover::before {
+    left: 100%;
+}
+
+.social-btn:hover {
+    background-color: #CC0000;
+    box-shadow: 0 0 20px #FF0000;
+    transform: scale(1.05);
+}
+
+/* Fire Animation for Social Buttons */
+@keyframes fire {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+.social-btn:hover {
+    animation: fire 0.5s infinite;
+}
+
+/* WhatsApp Button */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-btn video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.2);
+    box-shadow: 0 8px 16px rgba(255, 0, 0, 0.5);
+}
+
+/* Save Contact Button */
+.save-contact-btn {
+    padding: 15px 30px;
+    background-color: #8B0000;
+    color: #FF0000;
+    border: 2px solid #FF0000;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    margin: 20px;
+}
+
+.save-contact-btn:hover {
+    background-color: #FF0000;
+    color: #000;
+    box-shadow: 0 0 20px #FF0000;
+}
+
+/* Contact Info */
+.contact-info {
+    margin-top: 40px;
+}
+
+.contact-info a {
+    color: #FF0000;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+    color: #FF0000;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .social-btn {
+        padding: 10px 20px;
+        margin: 5px;
+    }
+
+    .whatsapp-btn {
+        width: 60px;
+        height: 60px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .logo {
+        width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .social-media {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .social-btn {
+        width: 80%;
+        max-width: 200px;
+    }
+}
