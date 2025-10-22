@@ -1,119 +1,236 @@
-/* Reset and Base Styles */
+/* ========================================
+   ROCK CITY - BORN TO BLEED STYLE
+   Mobile-First Responsive Design
+   ======================================== */
+
+/* CSS Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #000000;
-    color: #FF0000;
+    background: #000;
+    color: #ff0000;
     line-height: 1.6;
     overflow-x: hidden;
-    /* Performance optimizations */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    transform: translateZ(0); /* Force hardware acceleration */
 }
 
-/* Loading optimization */
-.hero, .video-section {
-    will-change: transform;
-}
-
-.background-video, .popup-video {
-    will-change: auto;
-}
-
-/* Performance optimized animations */
-.social-btn, .contact-btn, .cta-btn, .mute-btn {
-    will-change: transform;
-}
-
-/* Header */
-header {
+/* ========================================
+   LOADING SCREEN
+   ======================================== */
+.loading-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
-    background-image: url('portada.png');
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
+    height: 100%;
+    background: #000;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    z-index: 1;
+    align-items: center;
+    z-index: 9999;
 }
 
-.logo {
-    width: 150px;
-    height: auto;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
+.loader-logo {
+    font-family: Impact, Arial Black;
+    font-size: 2rem;
+    color: #ff0000;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+    animation: pulse 1s ease-in-out infinite;
 }
 
-/* Hero Section */
-.hero {
-    height: 100vh;
-    position: relative;
+.loader-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 0, 0, 0.3);
+    border-radius: 2px;
     overflow: hidden;
 }
 
-.hero-content {
-    position: relative;
-    z-index: 2;
+.loader-bar::after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff0000, #ff4444);
+    animation: loading 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes loading {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem;
+    background: linear-gradient(180deg,
+        rgba(0,0,0,0.9) 0%,
+        rgba(0,0,0,0.7) 70%,
+        transparent 100%);
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* ========================================
+   HERO SECTION (FLOATING CARD STYLE)
+   ======================================== */
+.hero {
+    height: 100vh;
+    background:
+        linear-gradient(45deg, rgba(0,0,0,0.7), rgba(255,0,0,0.1)),
+        url('portada.png');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 100%;
-    color: #FF0000;
-    text-shadow: 2px 2px 4px #000;
+    position: relative;
+    /* Hardware acceleration for parallax */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Make it narrower to show black background around */
+    width: 85vw;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(255, 0, 0, 0.2);
+    border: 3px solid rgba(255, 0, 0, 0.3);
+    overflow: hidden;
 }
 
-.hero-content h1 {
-    font-size: 4rem;
-    font-weight: 900;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-family: 'Impact', 'Arial Black', sans-serif;
-    text-shadow:
-        3px 3px 0px #8B0000,
-        6px 6px 0px #000000,
-        9px 9px 10px rgba(0,0,0,0.8);
+/* Fallback for browsers that don't support background-attachment: fixed */
+@media (max-width: 768px) {
+    .hero {
+        background-attachment: scroll;
+    }
+}
+
+.hero-content {
+    z-index: 2;
+}
+
+/* ========================================
+   HERO TITLE SECTION (BELOW BUTTONS)
+   ======================================== */
+.hero-title-section {
+    padding: 5rem 0;
+    background: linear-gradient(180deg,
+        rgba(0,0,0,0.8) 0%,
+        rgba(0,0,0,0.9) 50%,
+        rgba(0,0,0,0.8) 100%);
+    text-align: center;
     position: relative;
-    background: linear-gradient(45deg, #FF0000, #FFFFFF, #FF0000);
+    /* Hardware acceleration for parallax */
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-main {
+    font-family: Impact, Arial Black;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    background: linear-gradient(135deg, #ff0000, #ffffff, #ff0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: textPulse 2s ease-in-out infinite;
+    background-size: 200% 200%;
+    animation: metallic 3s ease-in-out infinite;
+    /* Hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform;
 }
 
-@keyframes textPulse {
+.title-sub {
+    font-family: Impact, Arial Black;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    letter-spacing: 0.1em;
+    /* Hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.title-tagline {
+    font-family: Impact, Arial Black;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    font-weight: 700;
+    color: #ff0000;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
+    /* Hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+@keyframes metallic {
     0%, 100% {
-        transform: scale(1);
-        filter: brightness(1);
+        background-position: 0% 50%;
     }
     50% {
-        transform: scale(1.02);
-        filter: brightness(1.2);
+        background-position: 100% 50%;
     }
 }
 
-/* Video Background Section */
-.video-section {
-    height: 100vh;
+/* ========================================
+   DASHBOARD SECTION (FLOATING CARD STYLE)
+   ======================================== */
+.dashboard-section {
+    min-height: 100vh;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
+    /* Hardware acceleration for better performance */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Center the content with black background showing around */
+    width: 100%;
+    padding: 2rem;
 }
 
 .background-video {
@@ -124,51 +241,95 @@ header {
     height: 100%;
     object-fit: cover;
     z-index: 1;
+    opacity: 0.4;
+    /* Allow clicks to pass through to buttons */
+    pointer-events: none;
+    /* Hardware acceleration */
+    transform: translateZ(0);
+    will-change: auto;
 }
 
-.overlay {
+.video-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 2;
 }
 
-.button-dashboard {
+.button-container {
     position: relative;
-    z-index: 3;
+    z-index: 10;
+    width: 90%;
+    max-width: 900px;
+    padding: 3rem 2rem;
     display: flex;
     flex-direction: column;
+    gap: 3rem;
     align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 20px;
+    /* Hardware acceleration for parallax */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Allow clicks to pass through to buttons */
+    pointer-events: none;
+    /* Card-like styling */
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    border: 2px solid rgba(255, 0, 0, 0.3);
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(255, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-/* Social Media Buttons */
-.social-media {
-    margin-bottom: 40px;
+/* ========================================
+   SOCIAL MEDIA BUTTONS
+   ======================================== */
+.social-buttons {
     display: flex;
     flex-wrap: wrap;
+    gap: 1rem;
     justify-content: center;
-    gap: 20px;
+    /* Hardware acceleration for parallax */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Ensure buttons are clickable */
+    pointer-events: none;
+}
+
+.social-buttons .social-btn {
+    pointer-events: auto;
 }
 
 .social-btn {
-    display: inline-block;
-    padding: 15px 30px;
-    background-color: #FF0000;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
     color: #000;
     text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    font-family: Impact, Arial Black;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 2px solid #ff0000;
+    border-radius: 8px;
     min-width: 120px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    /* Ensure buttons are always visible and clickable */
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .social-btn::before {
@@ -178,337 +339,573 @@ header {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255,255,255,0.3),
+        transparent);
     transition: left 0.5s;
+}
+
+.social-btn:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255,0,0,0.5);
+    background: linear-gradient(135deg, #ff4444, #ff6666);
+    /* Ensure button stays visible */
+    opacity: 1;
+    visibility: visible;
 }
 
 .social-btn:hover::before {
     left: 100%;
 }
 
-.social-btn:hover {
-    background-color: #CC0000;
-    box-shadow: 0 0 20px #FF0000;
-    transform: scale(1.05);
+/* Flip-flap animation for buttons (only when triggered) */
+.social-btn.flip-flap-animate {
+    animation: buttonWave 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
 }
 
-/* Fire Animation for Social Buttons */
-@keyframes fire {
-    0% { transform: translateY(0) scale(1); }
-    25% { transform: translateY(-8px) scale(1.02); }
-    50% { transform: translateY(-15px) scale(1.05); }
-    75% { transform: translateY(-8px) scale(1.02); }
-    100% { transform: translateY(0) scale(1); }
+.action-btn.flip-flap-animate {
+    animation: buttonWave 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
 }
 
-@keyframes flames {
+/* Continuous floating animation for buttons (disabled on mobile) */
+@media (min-width: 769px) {
+    .social-btn:not(.flip-flap-animate),
+    .action-btn:not(.flip-flap-animate) {
+        /* Disable floating animation to prevent conflicts */
+        /* animation: buttonFloat 4s ease-in-out infinite; */
+    }
+}
+
+@keyframes fireEffect {
     0% {
-        opacity: 0.8;
-        transform: translateY(0) rotate(0deg) scale(1);
-    }
-    25% {
-        opacity: 1;
-        transform: translateY(-5px) rotate(2deg) scale(1.1);
-    }
-    50% {
-        opacity: 0.9;
-        transform: translateY(-10px) rotate(-1deg) scale(1.2);
-    }
-    75% {
-        opacity: 1;
-        transform: translateY(-5px) rotate(1deg) scale(1.1);
+        box-shadow: 0 8px 20px rgba(255,0,0,0.5);
+        filter: brightness(1);
     }
     100% {
-        opacity: 0.8;
-        transform: translateY(0) rotate(0deg) scale(1);
+        box-shadow: 0 12px 30px rgba(255,100,0,0.8);
+        filter: brightness(1.2);
     }
 }
 
-@keyframes fireGlow {
-    0% { box-shadow: 0 0 20px #FF0000; }
-    50% { box-shadow: 0 0 30px #FF0000, 0 0 40px #FF0000; }
-    100% { box-shadow: 0 0 20px #FF0000; }
+/* ========================================
+   FLIP-FLAP ANIMATION FOR BUTTONS
+   ======================================== */
+@keyframes flipFlap {
+    0% {
+        transform: perspective(1000px) rotateX(90deg) scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: perspective(1000px) rotateX(-10deg) scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: perspective(1000px) rotateX(0deg) scale(1);
+        opacity: 1;
+    }
 }
 
-.social-btn:hover {
-    animation: fire 0.6s ease-in-out infinite, fireGlow 0.8s ease-in-out infinite;
+@keyframes buttonWave {
+    0% {
+        transform: translate3d(0, 50px, 0) rotateY(0deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate3d(0, 10px, 0) rotateY(0deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translate3d(0, 0, 0) rotateY(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes buttonFloat {
+    0%, 100% {
+        transform: translateY(0) rotateY(0deg);
+    }
+    25% {
+        transform: translateY(-3px) rotateY(2deg);
+    }
+    75% {
+        transform: translateY(3px) rotateY(-2deg);
+    }
+}
+
+/* ========================================
+   SKULL VIDEO SECTION (FLOATING CARD STYLE)
+   ======================================== */
+.skull-section {
+    background: linear-gradient(180deg,
+        rgba(0,0,0,0.8) 0%,
+        rgba(0,0,0,0.9) 50%,
+        rgba(0,0,0,0.8) 100%);
+    padding: 5rem 0;
     position: relative;
-}
-
-.social-btn::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 20px solid #FF0000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.social-btn:hover::after {
-    opacity: 0.7;
-    animation: flames 0.5s ease-in-out infinite;
-}
-
-.social-btn::before {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 15px solid #CC0000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.social-btn:hover::before {
-    opacity: 0.5;
-    animation: flames 0.7s ease-in-out infinite;
-}
-
-/* Contact Buttons */
-.contact-buttons {
+    overflow: hidden;
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
 }
 
-.contact-btn {
-    padding: 15px 30px;
-    background-color: #8B0000;
-    color: #FF0000;
-    border: 2px solid #FF0000;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-    min-width: 150px;
+.skull-video-container {
+    position: relative;
+    width: 80%;
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    /* Card-like styling */
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid rgba(255, 0, 0, 0.4);
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.8),
+        0 0 80px rgba(255, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    /* Hardware acceleration for parallax */
+    transform: translateZ(0);
+    will-change: transform;
 }
 
-.contact-btn:hover {
-    background-color: #FF0000;
-    color: #000;
-    box-shadow: 0 0 20px #FF0000;
-    transform: scale(1.05);
+.skull-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    /* Enhanced video filters */
+    filter: brightness(1.1) contrast(1.2) saturate(1.3);
+    transition: filter 0.3s ease;
 }
 
-/* Popup Modal */
-.popup-modal {
-    display: none;
-    position: fixed;
+.skull-video-container:hover .skull-video {
+    filter: brightness(1.3) contrast(1.4) saturate(1.5);
+}
+
+/* Overlay Effects */
+.smoke-overlay {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
+    background: radial-gradient(circle at center,
+        transparent 30%,
+        rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+    animation: smokeDrift 4s ease-in-out infinite;
+    z-index: 2;
 }
 
-.popup-content {
-    position: relative;
-    max-width: 90%;
-    max-height: 90%;
-}
-
-.popup-video {
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    pointer-events: none;
+    z-index: 3;
 }
 
-.close-btn {
+.particle {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: #FF0000;
-    font-size: 2rem;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-.cta-btn {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #FF0000;
-    color: #000;
-    border: none;
-    padding: 15px 30px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 1001;
-}
-
-.cta-btn:hover {
-    background-color: #CC0000;
-    transform: translateX(-50%) scale(1.05);
-}
-
-/* Floating WhatsApp Button */
-.whatsapp-float {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    background: linear-gradient(45deg, #25D366, #128C7E);
-    color: #FFFFFF;
-    border: none;
-    width: 60px;
-    height: 60px;
+    width: 4px;
+    height: 4px;
+    background: radial-gradient(circle,
+        var(--color-primary) 0%,
+        transparent 70%);
     border-radius: 50%;
-    cursor: pointer;
-    z-index: 1000;
-    font-size: 1.5rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-    animation: whatsappPulse 2s ease-in-out infinite;
+    animation: floatUp 6s linear infinite;
 }
 
-.whatsapp-float:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+@keyframes smokeDrift {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-20px) translateX(10px);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-40px) translateX(-10px);
+        opacity: 0.2;
+    }
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) translateX(20px);
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   ACTION BUTTONS
+   ======================================== */
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    /* Hardware acceleration for parallax */
+    transform: translateZ(0);
+    will-change: transform;
+    /* Ensure buttons are clickable */
+    pointer-events: none;
+}
+
+.action-buttons .action-btn {
+    pointer-events: auto;
+}
+
+.action-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #8b0000, #660000);
+    color: #ff0000;
+    border: 2px solid #ff0000;
+    font-family: Impact, Arial Black;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    min-width: 150px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    /* Ensure buttons are clickable */
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.action-btn:hover {
+    background: linear-gradient(135deg, #ff0000, #ff4444);
+    color: #000;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255,0,0,0.6);
+}
+
+/* Flip-flap animation for action buttons */
+.action-btn.flip-flap-animate {
+    animation: buttonWave 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* WhatsApp Button Styling */
+.whatsapp-btn {
+    background: linear-gradient(135deg, #25D366, #128C7E) !important;
+    color: #fff !important;
+    border: 2px solid #25D366 !important;
+    animation: whatsappPulse 2s ease-in-out infinite;
+    /* Ensure button is always visible */
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 10 !important;
+    cursor: pointer !important;
+}
+
+.whatsapp-btn:hover {
+    background: linear-gradient(135deg, #128C7E, #075E54) !important;
+    color: #fff !important;
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6) !important;
+    /* Ensure button stays visible */
+    opacity: 1;
+    visibility: visible;
 }
 
 @keyframes whatsappPulse {
     0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
     }
     50% {
-        transform: scale(1.05);
-        box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.7);
     }
 }
 
-/* Mute Button */
-.mute-btn {
+
+/* ========================================
+   MUSIC CONTROL
+   ======================================== */
+.music-control {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    background-color: #FF0000;
-    color: #000;
+    width: 50px;
+    height: 50px;
+    background: #ff0000;
     border: none;
-    padding: 10px;
     border-radius: 50%;
+    color: #000;
+    font-size: 1.2rem;
     cursor: pointer;
     z-index: 1000;
-    font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     transition: all 0.3s ease;
 }
 
-.mute-btn:hover {
-    background-color: #CC0000;
+.music-control:hover {
+    background: #ff4444;
     transform: scale(1.1);
 }
 
-/* Responsive Design */
+/* ========================================
+   MOBILE OPTIMIZATION (CRITICAL)
+   ======================================== */
 
-/* Tablet Styles */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .hero-content h1 {
-        font-size: 3.5rem;
-    }
-
-    .social-media {
-        gap: 25px;
-    }
-
-    .social-btn {
-        padding: 12px 25px;
-        min-width: 110px;
-    }
-
-    .contact-buttons {
-        gap: 25px;
-    }
-
-    .contact-btn {
-        padding: 12px 25px;
-        min-width: 140px;
-    }
-
-    .logo {
-        width: 120px;
-    }
-
-    .button-dashboard {
-        padding: 30px;
-    }
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .social-media {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .social-btn {
-        width: 80%;
-        max-width: 200px;
-    }
-
-    .contact-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .contact-btn {
-        width: 80%;
-        max-width: 200px;
+/* Mobile Small (320px - 480px) */
+@media (max-width: 480px) {
+    .header {
+        padding: 0.5rem;
     }
 
     .logo {
         width: 100px;
     }
 
-    .mute-btn {
-        bottom: 10px;
-        left: 10px;
+    .button-container {
+        padding: 1rem;
+        gap: 2rem;
     }
 
-    .whatsapp-float {
-        bottom: 70px;
-        right: 15px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-content h1 {
-        font-size: 2rem;
+    .social-buttons {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
 
     .social-btn {
-        padding: 10px 20px;
+        width: 90%;
+        max-width: 250px;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        min-height: 48px; /* Touch target */
     }
 
-    .contact-btn {
-        padding: 10px 20px;
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 0.8rem;
+    }
+
+    .action-btn {
+        width: 90%;
+        max-width: 250px;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        min-height: 48px; /* Touch target */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .music-control {
+        bottom: 15px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    /* Disable parallax on mobile for better performance */
+    .hero {
+        background-attachment: scroll;
+    }
+
+    /* Reduce motion for better mobile performance */
+    .social-btn, .action-btn {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        animation: none !important;
+        /* Ensure visibility on mobile */
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translate3d(0, 0, 0) !important;
+    }
+
+    /* Disable parallax on mobile for better performance */
+    .button-container, .social-buttons, .action-buttons {
+        transform: translateZ(0) !important;
+    }
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+.social-btn, .action-btn, .music-control {
+    will-change: transform;
+}
+
+/* Ensure proper z-index layering */
+.background-video { z-index: 1; }
+.video-overlay { z-index: 2; }
+.button-container { z-index: 3; }
+.header { z-index: 1000; }
+.music-control { z-index: 1001; }
+
+/* Additional mobile optimizations */
+@media (max-width: 768px) {
+    /* Ensure all buttons remain visible on mobile */
+    .social-btn, .action-btn, .whatsapp-btn {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translate3d(0, 0, 0) !important;
+    }
+}
+
+/* Mobile Large (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .social-buttons {
+        gap: 0.8rem;
+    }
+
+    .social-btn {
+        min-width: 110px;
+        padding: 0.9rem 1.8rem;
+    }
+
+    .action-btn {
+        min-width: 140px;
+        padding: 0.9rem 1.8rem;
+    }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .button-container {
+        max-width: 900px;
+    }
+
+    .social-btn {
+        min-width: 130px;
+        padding: 1rem 2.2rem;
+    }
+
+    .action-btn {
+        min-width: 160px;
+        padding: 1rem 2.2rem;
+    }
+}
+
+/* Hero Title Section Responsive */
+@media (min-width: 769px) {
+    .hero-title-section {
+        padding: 6rem 0;
+    }
+
+    .hero-title {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title-section {
+        padding: 3rem 0;
+    }
+
+    .hero-title {
+        gap: 1rem;
+    }
+}
+
+/* Skull Video Responsive */
+@media (max-width: 768px) {
+    .skull-video-container {
+        width: 95%;
+        max-width: none;
+        border-radius: 15px;
+    }
+
+    .skull-section {
+        padding: 3rem 0;
+    }
+}
+
+@media (min-width: 769px) {
+    .skull-video-container {
+        width: 85%;
+        max-width: 800px;
+    }
+}
+
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+    .button-container {
+        max-width: 1000px;
+    }
+
+    .social-btn {
+        min-width: 140px;
+        padding: 1.2rem 2.5rem;
+        font-size: 1.1rem;
+    }
+
+    .action-btn {
+        min-width: 180px;
+        padding: 1.2rem 2.5rem;
+        font-size: 1.1rem;
+    }
+
+    .hero-title-section {
+        padding: 8rem 0;
+    }
+
+    .skull-video-container {
+        width: 75%;
+        max-width: 900px;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY & PERFORMANCE
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+.social-btn:focus,
+.action-btn:focus,
+.cta-button:focus,
+.close-btn:focus,
+.music-control:focus {
+    outline: 3px solid #ff4444;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .social-btn,
+    .action-btn,
+    .cta-button {
+        border-width: 3px;
     }
 }

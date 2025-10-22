@@ -4,88 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Rock City - Born to Bleed Style. Welcome to Rock City – Where Style Meets Rock!">
-    <title>Rock City - Born to Bleed Style</title>
-    <link rel="stylesheet" href="styles.css">
-    
+    <meta name="keywords" content="Rock City, Rock Shop, estilo rock, ropa rock, accesorios rock">
+    <meta name="author" content="Rock City">
+    <meta name="theme-color" content="#E60000">
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Rock City - Born to Bleed Style">
     <meta property="og:description" content="Welcome to Rock City – Where Style Meets Rock!">
     <meta property="og:image" content="logo.png">
     <meta property="og:url" content="https://yourusername.github.io/rockcity/">
     <meta property="og:type" content="website">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Rock City - Born to Bleed Style">
-    <meta name="twitter:description" content="Welcome to Rock City – Where Style Meets Rock!">
-    <meta name="twitter:image" content="logo.png">
+
+    <title>Rock City - Born to Bleed Style</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Loading screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader-logo">ROCK CITY</div>
+        <div class="loader-bar"></div>
+    </div>
+
     <!-- Header with logo -->
-    <header>
+    <header class="header">
         <img src="logo.png" alt="Rock City Logo" class="logo">
     </header>
 
-    <!-- Hero section with parallax -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>BORN TO BLEED STYLE</h1>
-        </div>
-    </section>
-
-    <!-- Video background section with buttons -->
-    <section class="video-section">
-        <video autoplay loop muted class="background-video">
-            <source src="korn.mp4" type="video/mp4">
-        </video>
-        <div class="overlay"></div>
-        <div class="button-dashboard">
-            <!-- Social media buttons with fire animations -->
-            <div class="social-media">
-                <a href="https://www.facebook.com/profile.php?id=61582657080200" class="social-btn facebook" target="_blank">
-                    <span>Facebook</span>
-                </a>
-                <a href="https://www.instagram.com/luisfernandomsnver?igsh=dnV2azd3dGU5aWEw" class="social-btn instagram" target="_blank">
-                    <span>Instagram</span>
-                </a>
-                <a href="https://www.tiktok.com/@rockcitygear/video/7563835389656583436" class="social-btn tiktok" target="_blank">
-                    <span>TikTok</span>
-                </a>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero section with parallax -->
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <!-- Hero text moved below buttons -->
             </div>
+        </section>
 
-            <!-- Contact action buttons -->
-            <div class="contact-buttons">
-                <a href="tel:7774808222" class="contact-btn call-btn">LLAMAR</a>
-                <button class="contact-btn add-contact-btn" id="add-contact-btn">AGREGAR A CONTACTO</button>
-                <a href="https://maps.app.goo.gl/PNRWFZFusDoS6X4i9" class="contact-btn location-btn" target="_blank">UBICACIÓN</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- WhatsApp popup modal -->
-    <div class="popup-modal" id="popup-modal">
-        <div class="popup-content">
-            <button class="close-btn" id="close-popup">&times;</button>
-            <video autoplay muted class="popup-video">
-                <source src="popup.mp4" type="video/mp4">
+        <!-- Dashboard section with video background -->
+        <section class="dashboard-section">
+            <video class="background-video" autoplay muted loop playsinline>
+                <source src="korn.mp4" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
-            <button class="cta-btn" id="agendar-cita">AGENDAR CITA</button>
-        </div>
-    </div>
+            <div class="video-overlay"></div>
 
-    <!-- Background audio element -->
+            <div class="button-container">
+                <!-- Social Media Buttons -->
+                <div class="social-buttons">
+                    <a href="https://www.facebook.com/profile.php?id=61582657080200"
+                       class="social-btn facebook"
+                       target="_blank">
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://www.instagram.com/luisfernandomsnver?igsh=dnV2azd3dGU5aWEw"
+                       class="social-btn instagram"
+                       target="_blank">
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://www.tiktok.com/@rockcitygear/video/7563835389656583436"
+                       class="social-btn tiktok"
+                       target="_blank">
+                        <span>TikTok</span>
+                    </a>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a href="tel:+527774808222" class="action-btn call-btn">
+                        📞 LLAMAR
+                    </a>
+                    <button class="action-btn contact-btn" id="contact-btn">
+                        👤 AGREGAR CONTACTO
+                    </button>
+                    <a href="https://maps.app.goo.gl/PNRWFZFusDoS6X4i9"
+                       class="action-btn location-btn"
+                       target="_blank">
+                        📍 UBICACIÓN
+                    </a>
+                    <a href="https://wa.me/527774808222?text=Hola%20Rock%20City%2C%20quiero%20agendar%20una%20cita"
+                       class="action-btn whatsapp-btn"
+                       target="_blank">
+                        📱 AGENDAR CITA
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Title Section with Parallax (moved below buttons) -->
+        <section class="hero-title-section">
+            <div class="container">
+                <h1 class="hero-title">
+                    <span class="title-main">ROCK CITY</span>
+                    <span class="title-sub">ROCK SHOP</span>
+                    <span class="title-tagline">BORN TO BLEED STYLE</span>
+                </h1>
+            </div>
+        </section>
+    </main>
+
+    <!-- Background Music -->
     <audio id="background-music" autoplay loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Floating WhatsApp Button -->
-    <button class="whatsapp-float" id="whatsapp-float" title="¡Contáctanos!">
-        <span>💬</span>
-    </button>
+    <!-- Music Control Button -->
+    <button id="music-toggle" class="music-control">🔊</button>
 
-    <!-- Mute toggle button -->
-    <button class="mute-btn" id="mute-btn">🔊</button>
-
-    <script src="main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
