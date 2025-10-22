@@ -118,16 +118,25 @@ body {
     /* Hardware acceleration for parallax */
     transform: translateZ(0);
     will-change: transform;
-    /* Make it narrower to show black background around */
-    width: 85vw;
+    /* Responsive width - narrower on desktop, full on mobile */
+    width: 95vw;
     max-width: 1200px;
     margin: 0 auto;
-    border-radius: 20px;
+    border-radius: 15px;
     box-shadow:
         0 10px 40px rgba(0, 0, 0, 0.6),
         0 0 80px rgba(255, 0, 0, 0.2);
-    border: 3px solid rgba(255, 0, 0, 0.3);
+    border: 2px solid rgba(255, 0, 0, 0.3);
     overflow: hidden;
+}
+
+/* Desktop floating card effect */
+@media (min-width: 769px) {
+    .hero {
+        width: 85vw;
+        border-radius: 20px;
+        border-width: 3px;
+    }
 }
 
 /* Fallback for browsers that don't support background-attachment: fixed */
@@ -457,14 +466,14 @@ body {
 
 .skull-video-container {
     position: relative;
-    width: 80%;
+    width: 90%; /* Wider on mobile for better visibility */
     max-width: 700px;
     margin: 0 auto;
-    border-radius: 20px;
+    border-radius: 15px; /* Smaller radius on mobile */
     overflow: hidden;
     /* Card-like styling */
     background: rgba(0, 0, 0, 0.9);
-    border: 3px solid rgba(255, 0, 0, 0.4);
+    border: 2px solid rgba(255, 0, 0, 0.4); /* Thinner border on mobile */
     box-shadow:
         0 15px 50px rgba(0, 0, 0, 0.8),
         0 0 80px rgba(255, 0, 0, 0.3),
@@ -472,6 +481,16 @@ body {
     /* Hardware acceleration for parallax */
     transform: translateZ(0);
     will-change: transform;
+}
+
+/* Desktop styling for skull video */
+@media (min-width: 769px) {
+    .skull-video-container {
+        width: 80%;
+        max-width: 700px;
+        border-radius: 20px;
+        border-width: 3px;
+    }
 }
 
 .skull-video {
@@ -688,8 +707,10 @@ body {
     }
 
     .button-container {
-        padding: 1rem;
+        padding: 1.5rem;
         gap: 2rem;
+        width: 95%; /* Wider on mobile for better visibility */
+        max-width: none;
     }
 
     .social-buttons {
@@ -701,9 +722,15 @@ body {
     .social-btn {
         width: 90%;
         max-width: 250px;
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
-        min-height: 48px; /* Touch target */
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        min-height: 50px; /* Larger touch target */
+        min-width: 120px;
+        /* Ensure proper display */
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: relative;
     }
 
     .action-buttons {
@@ -716,12 +743,15 @@ body {
     .action-btn {
         width: 90%;
         max-width: 250px;
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
-        min-height: 48px; /* Touch target */
-        display: flex;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        min-height: 50px; /* Larger touch target */
+        min-width: 120px;
+        /* Ensure proper display */
+        display: flex !important;
         align-items: center;
         justify-content: center;
+        position: relative;
     }
 
     .music-control {
@@ -737,14 +767,23 @@ body {
         background-attachment: scroll;
     }
 
-    /* Reduce motion for better mobile performance */
+    /* Enable animations on mobile with proper settings */
     .social-btn, .action-btn {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        animation: none !important;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* Enable flip-flap animations on mobile */
+        /* animation: none; */
         /* Ensure visibility on mobile */
         opacity: 1 !important;
         visibility: visible !important;
         transform: translate3d(0, 0, 0) !important;
+        /* Ensure proper display */
+        display: flex !important;
+        position: relative !important;
+    }
+
+    /* Enable flip-flap animation on mobile */
+    .social-btn.flip-flap-animate, .action-btn.flip-flap-animate {
+        animation: buttonWave 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards !important;
     }
 
     /* Disable parallax on mobile for better performance */

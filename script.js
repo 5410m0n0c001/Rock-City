@@ -186,15 +186,20 @@ function initScrollAnimations() {
             actionButtons.style.transform = `translate3d(0, ${actionRate}px, 0)`;
         }
 
-        // Intersection Observer for button animations
+        // Intersection Observer for button animations (works on mobile too)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    // Add flip-flap animation class
-                    entry.target.classList.add('flip-flap-animate');
+                    // Add flip-flap animation class with slight delay for mobile
+                    setTimeout(() => {
+                        entry.target.classList.add('flip-flap-animate');
+                    }, 100);
                 }
             });
-        }, { threshold: 0.2 });
+        }, {
+            threshold: 0.1, // Lower threshold for mobile
+            rootMargin: '50px' // Trigger earlier on mobile
+        });
 
         // Observe all buttons for flip-flap animation
         document.querySelectorAll('.social-btn, .action-btn').forEach((btn, index) => {
@@ -238,7 +243,7 @@ function initScrollAnimations() {
     // Initial button states with hardware acceleration
     const allBtns = document.querySelectorAll('.social-btn, .action-btn');
     allBtns.forEach((btn, index) => {
-        // Set initial state for animations - ensure buttons are always visible
+        // Set initial state for animations - ensure buttons are always visible and clickable
         btn.style.transform = 'translate3d(0, 0, 0)';
         btn.style.opacity = '1';
         btn.style.transformOrigin = 'center center';
@@ -248,6 +253,13 @@ function initScrollAnimations() {
         btn.style.position = 'relative';
         btn.style.zIndex = '10';
         btn.style.visibility = 'visible';
+        btn.style.display = 'flex';
+
+        // Ensure buttons work on mobile
+        if ('ontouchstart' in window) {
+            btn.style.minHeight = '48px';
+            btn.style.touchAction = 'manipulation';
+        }
     });
 
     // Initial title states with hardware acceleration
@@ -387,28 +399,50 @@ function testButtonFunctionality() {
 setTimeout(testButtonFunctionality, 1000);
 
 // ========================================
-// MOBILE TOUCH SUPPORT
+// ENSURE BUTTONS ARE ALWAYS VISIBLE
+// ========================================
+function ensureButtonVisibility() {
+    // Force all buttons to be visible
+    const allBtns = document.querySelectorAll('.social-btn, .action-btn');
+    allBtns.forEach(btn => {
+        btn.style.opacity = '1';
+        btn.style.visibility = 'visible';
+        btn.style.display = 'flex';
+        btn.style.pointerEvents = 'auto';
+        btn.style.zIndex = '10';
+    });
+
+    console.log(`Ensured visibility for ${allBtns.length} buttons`);
+}
+
+// Ensure visibility after animations complete
+setTimeout(ensureButtonVisibility, 2000);
+
+// ========================================
+// MOBILE TOUCH SUPPORT (FIXED)
 // ========================================
 function initMobileSupport() {
     // Ensure buttons work on mobile devices
     const allBtns = document.querySelectorAll('.social-btn, .action-btn');
 
     allBtns.forEach(btn => {
-        // Add touch event support
+        // Add touch event support for better mobile interaction
         btn.addEventListener('touchstart', function(e) {
-            // Prevent double-tap zoom on mobile
+            // Prevent double-tap zoom and ensure click works
             e.preventDefault();
-            // Add visual feedback
-            this.style.transform = 'scale(0.95)';
-        });
+            // Add visual feedback for touch
+            this.style.transform = 'scale(0.95) translateY(-2px)';
+            this.style.boxShadow = '0 6px 15px rgba(0,0,0,0.4)';
+        }, { passive: false });
 
         btn.addEventListener('touchend', function(e) {
             e.preventDefault();
-            // Reset visual state
+            // Reset visual state after touch
             setTimeout(() => {
-                this.style.transform = '';
+                this.style.transform = 'scale(1) translateY(0)';
+                this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
             }, 150);
-        });
+        }, { passive: false });
 
         // Ensure proper hit area on mobile
         if ('ontouchstart' in window) {
@@ -417,8 +451,17 @@ function initMobileSupport() {
             btn.style.display = 'flex';
             btn.style.alignItems = 'center';
             btn.style.justifyContent = 'center';
+            btn.style.touchAction = 'manipulation';
+            btn.style.WebkitTapHighlightColor = 'rgba(255, 0, 0, 0.3)';
         }
+
+        // Ensure buttons are always clickable
+        btn.style.cursor = 'pointer';
+        btn.style.pointerEvents = 'auto';
+        btn.style.zIndex = '10';
     });
+
+    console.log(`Mobile support initialized for ${allBtns.length} buttons`);
 }
 
 // Initialize mobile support
