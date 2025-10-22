@@ -1,9 +1,41 @@
-// WhatsApp Button Functionality
-document.getElementById('whatsapp-btn').addEventListener('click', function() {
-    window.open('https://wa.me/527774808222?text=Hello%20Rock%20City%2C%20I%20want%20more%20information', '_blank');
+// ========================================
+// MÚSICA DE FONDO
+// ========================================
+document.addEventListener('DOMContentLoaded', function() {
+  const backgroundMusic = document.getElementById('backgroundMusic');
+  
+  // Intentar reproducir automáticamente
+  const playPromise = backgroundMusic.play();
+  
+  if (playPromise !== undefined) {
+    playPromise.catch(error => {
+      console.log('Autoplay bloqueado, esperando interacción del usuario');
+      // Reproducir en el primer clic/tap
+      document.body.addEventListener('click', function() {
+        backgroundMusic.play();
+      }, { once: true });
+    });
+  }
 });
 
-// Save Contact Button Functionality
+// ========================================
+// BOTÓN AGENDAR CITA
+// ========================================
+document.querySelector('.agendar-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  
+  // Abrir WhatsApp en nueva pestaña
+  window.open(
+    'https://wa.me/527774808222?text=Hola%20Rock%20City%2C%20quiero%20más%20información',
+    '_blank',
+    'noopener,noreferrer'
+  );
+});
+
+// ========================================
+// SAVE CONTACT BUTTON
+// ========================================
 document.getElementById('save-contact-btn').addEventListener('click', function() {
     const vCard = `BEGIN:VCARD
 VERSION:3.0
@@ -23,22 +55,9 @@ END:VCARD`;
     URL.revokeObjectURL(url);
 });
 
-// Background Music Playback
-document.addEventListener('DOMContentLoaded', function() {
-    const audio = document.getElementById('background-music');
-    audio.play().then(function() {
-        audio.muted = false; // Unmute after play starts
-    }).catch(function(e) {
-        // If autoplay fails, play on first user interaction
-        document.addEventListener('click', function() {
-            audio.play().then(function() {
-                audio.muted = false;
-            });
-        }, { once: true });
-    });
-});
-
-// Optional: Enhance social media buttons with additional animations if needed
+// ========================================
+// SOCIAL MEDIA ANIMATIONS
+// ========================================
 document.querySelectorAll('.social-btn').forEach(btn => {
     btn.addEventListener('mouseenter', function() {
         this.style.animationPlayState = 'running';

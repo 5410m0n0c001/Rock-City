@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,10 +27,6 @@
             </div>
 
             <div class="actions">
-                <button id="whatsapp-btn" class="whatsapp-btn">
-                    <video src="popup.mp4" autoplay muted loop></video>
-                    Contact via WhatsApp
-                </button>
                 <button id="save-contact-btn" class="save-contact-btn">Save Contact</button>
             </div>
 
@@ -45,10 +41,17 @@
         <p>&copy; 2023 Rock City. All rights reserved.</p>
     </footer>
 
-    <audio id="background-music" autoplay loop muted preload="auto">
+    <audio id="backgroundMusic" autoplay loop>
         <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
     </audio>
+
+    <!-- BOTÓN WHATSAPP (video sin audio, solo visual) -->
+    <a href="https://wa.me/527774808222?text=Hola%20Rock%20City%2C%20quiero%20más%20información" target="_blank" class="whatsapp-floating" id="whatsappBtn">
+        <video autoplay loop muted playsinline>
+            <source src="popup.mp4" type="video/mp4">
+        </video>
+        <button class="agendar-btn">Agendar Cita</button>
+    </a>
 
     <script src="script.js"></script>
 </body>
