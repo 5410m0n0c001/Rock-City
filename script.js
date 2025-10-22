@@ -79,38 +79,69 @@ function initBackgroundMusic() {
 }
 
 // ========================================
-// VIDEO PLAYBACK FIXES
+// VIDEO PLAYBACK FIXES (RESPONSIVE)
 // ========================================
 function initVideoPlayback() {
+    // Handle background video (kornmovil.mp4 / kornmovil.mp4)
     const backgroundVideo = document.querySelector('.background-video');
-
     if (backgroundVideo) {
-        // Ensure video plays correctly
         backgroundVideo.play().catch(error => {
-            console.log('Video autoplay failed:', error);
-            // Try to play on user interaction
+            console.log('Background video autoplay failed:', error);
             const playOnInteraction = () => {
-                backgroundVideo.play().catch(e => console.log('Manual play failed:', e));
+                backgroundVideo.play().catch(e => console.log('Background video manual play failed:', e));
                 document.body.removeEventListener('click', playOnInteraction);
                 document.body.removeEventListener('touchstart', playOnInteraction);
             };
-
             document.body.addEventListener('click', playOnInteraction);
             document.body.addEventListener('touchstart', playOnInteraction);
         });
 
-        // Handle video loading errors
         backgroundVideo.addEventListener('error', function() {
-            console.log('Video failed to load');
-            // Add fallback background
+            console.log('Background video failed to load');
             this.parentElement.style.background = 'linear-gradient(45deg, #000, #333)';
         });
+    }
 
-        // Ensure video loops correctly
-        backgroundVideo.addEventListener('ended', function() {
-            this.play().catch(e => console.log('Loop failed:', e));
+    // Handle skull video (kornmovil.mp4 / kornmovil.mp4)
+    const skullVideo = document.querySelector('.skull-video');
+    if (skullVideo) {
+        skullVideo.play().catch(error => {
+            console.log('Skull video autoplay failed:', error);
+            const playOnInteraction = () => {
+                skullVideo.play().catch(e => console.log('Skull video manual play failed:', e));
+                document.body.removeEventListener('click', playOnInteraction);
+                document.body.removeEventListener('touchstart', playOnInteraction);
+            };
+            document.body.addEventListener('click', playOnInteraction);
+            document.body.addEventListener('touchstart', playOnInteraction);
+        });
+
+        skullVideo.addEventListener('error', function() {
+            console.log('Skull video failed to load');
+            this.parentElement.style.background = 'linear-gradient(45deg, #000, #333)';
         });
     }
+
+    // Ensure responsive video loading
+    function handleSourceChange() {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            // Force video to load the correct source based on screen size
+            const sources = video.querySelectorAll('source');
+            sources.forEach(source => {
+                if (source.media && window.matchMedia(source.media).matches) {
+                    if (video.currentSrc !== source.src) {
+                        video.src = source.src;
+                        video.load();
+                    }
+                }
+            });
+        });
+    }
+
+    // Handle screen resize for responsive videos
+    window.addEventListener('resize', handleSourceChange);
+    handleSourceChange(); // Initial load
 }
 
 // ========================================

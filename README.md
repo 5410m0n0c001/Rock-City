@@ -61,18 +61,18 @@ rockcity/
 ├── script.js           # Vanilla JavaScript functionality
 ├── .nojekyll           # GitHub Pages configuration
 └── assets/
-    ├── images/ (portada.png, logo.png)
-    ├── videos/ (popup.mp4, korn.mp4)
+    ├── images/ (portadamovil.png, logo.png)
+    ├── videos/ (popup.mp4, kornmovil.mp4)
     └── audio/ (music.mp3)
 ```
 
 ### **Hero Section**
-- **Background**: portada.png with parallax scrolling
+- **Background**: portadamovil.png with parallax scrolling
 - **Logo**: Floating animation, responsive sizing
 - **Parallax Speed**: 0.5x for depth effect
 
 ### **Video Background Section**
-- **Video**: korn.mp4 with opacity overlay
+- **Video**: kornmovil.mp4 with opacity overlay
 - **Properties**: Muted, autoplay, loop, object-fit: cover
 - **Overlay**: Semi-transparent for button visibility
 
@@ -104,7 +104,7 @@ rockcity/
 ✅ **Contains video at proper proportions**
 ✅ **"AGENDAR CITA" button overlay**
 
-### **korn.mp4 (Background Video)**
+### **kornmovil.mp4 (Background Video)**
 ✅ **Background positioning** behind button dashboard
 ✅ **Opacity overlay** for button visibility
 ✅ **Responsive sizing** across all devices

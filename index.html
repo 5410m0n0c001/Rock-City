@@ -42,7 +42,8 @@
         <!-- Dashboard section with video background -->
         <section class="dashboard-section">
             <video class="background-video" autoplay muted loop playsinline>
-                <source src="korn.mp4" type="video/mp4">
+                <source src="kornmovil.mp4" type="video/mp4" media="(min-width: 769px)">
+                <source src="kornmovil.mp4" type="video/mp4" media="(max-width: 768px)">
                 Your browser does not support the video tag.
             </video>
             <div class="video-overlay"></div>
@@ -97,6 +98,27 @@
                     <span class="title-sub">ROCK SHOP</span>
                     <span class="title-tagline">BORN TO BLEED STYLE</span>
                 </h1>
+            </div>
+        </section>
+
+        <!-- Skull Video Section -->
+        <section id="skull" class="skull-section parallax-section animated-section">
+            <div class="container">
+                <div class="skull-video-container">
+                    <video class="skull-video"
+                           autoplay
+                           loop
+                           muted
+                           playsinline
+                           preload="metadata">
+                        <source src="kornmovil.mp4" type="video/mp4" media="(min-width: 769px)">
+                        <source src="kornmovil.mp4" type="video/mp4" media="(max-width: 768px)">
+                    </video>
+                    <!-- Overlay effects -->
+                    <div class="smoke-overlay"></div>
+                    <div class="particle-overlay"></div>
+                    <div class="particles-container"></div>
+                </div>
             </div>
         </section>
     </main>

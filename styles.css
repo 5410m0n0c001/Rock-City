@@ -99,13 +99,14 @@ body {
 }
 
 /* ========================================
-   HERO SECTION (FLOATING CARD STYLE)
+   HERO SECTION (RESPONSIVE BACKGROUND)
    ======================================== */
 .hero {
     height: 100vh;
+    /* Desktop background */
     background:
         linear-gradient(45deg, rgba(0,0,0,0.7), rgba(255,0,0,0.1)),
-        url('portada.png');
+        url('portadamovil.png');
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -128,6 +129,16 @@ body {
         0 0 80px rgba(255, 0, 0, 0.2);
     border: 2px solid rgba(255, 0, 0, 0.3);
     overflow: hidden;
+}
+
+/* Mobile background - use portadamovil.png */
+@media (max-width: 768px) {
+    .hero {
+        background:
+            linear-gradient(45deg, rgba(0,0,0,0.7), rgba(255,0,0,0.1)),
+            url('portadamovil.png');
+        background-attachment: scroll; /* Better performance on mobile */
+    }
 }
 
 /* Desktop floating card effect */
