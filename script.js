@@ -491,9 +491,15 @@ function initMobileOptimizations() {
     const actionBtns = document.querySelectorAll('.action-btn');
 
     actionBtns.forEach(btn => {
-        // Prevent double-tap zoom
+        // Prevent double-tap zoom on iOS but allow link functionality
         btn.addEventListener('touchend', function(e) {
-            e.preventDefault();
+            // Only prevent default for non-link interactions
+            const rect = this.getBoundingClientRect();
+            const isTapOnLink = e.target.closest('a') === this;
+
+            if (!isTapOnLink) {
+                e.preventDefault();
+            }
 
             // Add haptic feedback if available
             if (navigator.vibrate) {
@@ -501,7 +507,7 @@ function initMobileOptimizations() {
             }
         });
 
-        // Improve touch targets
+        // Improve touch targets for mobile
         if ('ontouchstart' in window) {
             btn.style.minHeight = '60px';
             btn.style.minWidth = '60px';

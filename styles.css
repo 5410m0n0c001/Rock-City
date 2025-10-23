@@ -478,6 +478,18 @@ body {
     opacity: 0;
     transform: translateY(30px);
     animation: footerReveal 1.5s ease 1s forwards;
+    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+}
+
+.footer-text {
+    position: relative;
+    text-align: center;
+    z-index: 4;
+    margin-bottom: var(--spacing-md);
+    transform: none;
+    bottom: auto;
+    left: auto;
 }
 
 .footer-title {
@@ -495,7 +507,7 @@ body {
     font-size: 1.5rem;
     color: var(--color-metal);
     letter-spacing: 0.1em;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 0;
 }
 
 .contact-info {
@@ -510,18 +522,56 @@ body {
 
 .social-links {
     display: flex;
-    justify-content: center;
-    gap: var(--spacing-lg);
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    position: relative;
 }
 
-.social-links a {
+.tiktok-link {
+    position: relative;
     color: var(--color-metal);
     text-decoration: none;
     font-size: 1rem;
     letter-spacing: 0.05em;
     transition: all var(--transition-fast);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 4;
+    bottom: auto;
+    left: auto;
+    transform: none;
+}
+
+.facebook-link {
     position: relative;
+    color: var(--color-metal);
+    text-decoration: none;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    transition: all var(--transition-fast);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 4;
+    bottom: auto;
+    left: auto;
+    transform: none;
+}
+
+.instagram-link {
+    color: var(--color-metal);
+    text-decoration: none;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    transition: all var(--transition-fast);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .social-links a::after {
@@ -535,12 +585,19 @@ body {
     transition: width var(--transition-fast);
 }
 
-.social-links a:hover {
+.tiktok-link:hover,
+.facebook-link:hover,
+.instagram-link:hover {
     color: var(--color-primary);
     text-shadow: var(--shadow-glow);
+    background: rgba(230, 0, 0, 0.1);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
 }
 
-.social-links a:hover::after {
+.tiktok-link:hover::after,
+.facebook-link:hover::after,
+.instagram-link:hover::after {
     width: 100%;
 }
 
@@ -571,6 +628,14 @@ body {
     transition: all var(--transition-fast);
 }
 
+.tiktok-link {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+}
+
 .music-toggle:hover {
     transform: scale(1.1);
     box-shadow: 0 10px 30px rgba(230, 0, 0, 0.6);
@@ -584,43 +649,129 @@ body {
    MOBILE OPTIMIZATION
    ======================================== */
 @media (max-width: 768px) {
-    .header-video {
-        height: 80vh;
-    }
-
-    .title-line {
-        font-size: clamp(2rem, 12vw, 4rem);
-    }
-
-    .action-buttons-grid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-md);
-    }
-
-    .action-btn {
-        padding: var(--spacing-md);
-        min-height: 70px;
-    }
-
-    .action-btn .btn-title {
-        font-size: 1.2rem;
-    }
-
     .footer-video {
-        height: 50vh;
-        min-height: 350px;
+        position: relative;
+        min-height: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
+    .footer-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 15px;
+        z-index: 2;
+    }
+
+    .footer-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
+    }
+
+    /* TEXTO DEL FOOTER - SUBIR POSICIÓN */
+    .footer-text {
+        text-align: center;
+        margin-top: -20px; /* Subir todo el bloque de texto */
+        margin-bottom: 0;
+    }
+
+    .footer-title {
+        font-size: 2.5rem;
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+    }
+
+    .footer-tagline {
+        font-size: 0.9rem;
+        margin: 5px 0 0 0;
+        padding: 0;
+        line-height: 1.2;
+    }
+
+    /* BOTONES SOCIALES - LAYOUT HORIZONTAL */
     .social-links {
-        gap: var(--spacing-md);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 340px;
+        gap: 0;
+        margin: 0 auto;
+        padding: 0 10px;
     }
 
-    .music-toggle {
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        font-size: 1rem;
+    /* ESTILOS INDIVIDUALES DE BOTONES */
+    .social-links a {
+        flex: 0 0 auto;
+        width: 100px;
+        padding: 12px 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        position: relative;
+        display: block;
+
+        /* CRÍTICO: Evitar overlap */
+        margin: 0 !important;
+        touch-action: manipulation;
+    }
+
+    /* ORDEN Y POSICIONAMIENTO ESPECÍFICO */
+    .facebook-link {
+        order: 1;
+        background: rgba(59, 89, 152, 0.9);
+        color: white;
+    }
+
+    .instagram-link {
+        order: 2;
+        background: rgba(228, 64, 95, 0.9);
+        color: white;
+    }
+
+    .tiktok-link {
+        order: 3;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+    }
+
+    /* HOVER EFFECTS */
+    .social-links a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+    }
+
+    .facebook-link:hover {
+        background: rgba(59, 89, 152, 1);
+    }
+
+    .instagram-link:hover {
+        background: rgba(228, 64, 95, 1);
+    }
+
+    .tiktok-link:hover {
+        background: rgba(0, 0, 0, 1);
+    }
+
+    /* ASEGURAR ÁREAS CLICKEABLES INDEPENDIENTES */
+    .social-links a::before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -2px;
+        right: -2px;
+        bottom: -5px;
+        z-index: -1;
     }
 }
 
@@ -637,14 +788,140 @@ body {
         padding: var(--spacing-lg) var(--spacing-sm);
     }
 
+    .action-buttons-grid {
+        gap: var(--spacing-lg);
+    }
+
+    .action-btn {
+        min-height: 90px;
+        min-width: 260px;
+        padding: var(--spacing-lg) var(--spacing-md);
+        font-size: 1.2rem;
+    }
+
+    .action-btn .btn-title {
+        font-size: 1.4rem;
+    }
+
+    .action-btn .btn-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .action-btn .btn-icon {
+        font-size: 3rem;
+        min-width: 60px;
+    }
+
     .footer-content {
-        padding: var(--spacing-md);
+        padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-xl);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .footer-text {
+        position: relative;
+        text-align: center;
+        z-index: 4;
+        margin-bottom: 4px;
+        margin-top: -8px;
+        transform: none;
+        bottom: auto;
+        left: auto;
+        order: 1;
+    }
+
+    .footer-title {
+        font-size: clamp(1.5rem, 10vw, 2.5rem);
+        margin-bottom: var(--spacing-xs);
+        margin-top: 0;
+        letter-spacing: 0.15em;
+    }
+
+    .footer-tagline {
+        font-size: 1.1rem;
+        margin-bottom: 0;
+        margin-top: -3px;
+        letter-spacing: 0.1em;
     }
 
     .social-links {
-        flex-direction: column;
-        gap: var(--spacing-sm);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--spacing-xs);
+        margin: var(--spacing-sm) 0 var(--spacing-xs) 0;
+        position: relative;
+        z-index: 4;
+        order: 2;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: 240px;
     }
+
+    .facebook-link {
+        position: relative;
+        color: var(--color-metal);
+        text-decoration: none;
+        font-size: 1.1rem;
+        letter-spacing: 0.05em;
+        transition: all var(--transition-fast);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.1);
+        min-height: 52px;
+        min-width: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: 1;
+        flex: 1;
+    }
+
+    .instagram-link {
+        position: relative;
+        color: var(--color-metal);
+        text-decoration: none;
+        font-size: 1.1rem;
+        letter-spacing: 0.05em;
+        transition: all var(--transition-fast);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.1);
+        min-height: 52px;
+        min-width: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: 2;
+        flex: 1;
+    }
+
+    .tiktok-link {
+        position: relative;
+        color: var(--color-metal);
+        text-decoration: none;
+        font-size: 1.1rem;
+        letter-spacing: 0.05em;
+        transition: all var(--transition-fast);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.1);
+        min-height: 52px;
+        min-width: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: 3;
+        flex: 1;
+    }
+
 }
 
 /* ========================================
