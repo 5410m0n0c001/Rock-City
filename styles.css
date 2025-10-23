@@ -695,38 +695,20 @@ body {
     }
 
     /* BOTONES SOCIALES - LAYOUT HORIZONTAL */
+    /* BOTONES SOCIALES - LAYOUT HORIZONTAL ORDEN FIJO */
     .social-links {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
+        gap: 18px;
         width: 100%;
-        max-width: 340px;
-        gap: 0;
+        max-width: 260px;
         margin: 0 auto;
         padding: 0 10px;
     }
 
-    /* ESTILOS INDIVIDUALES DE BOTONES */
-    .social-links a {
-        flex: 0 0 auto;
-        width: 100px;
-        padding: 12px 8px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-        position: relative;
-        display: block;
-
-        /* CRÍTICO: Evitar overlap */
-        margin: 0 !important;
-        touch-action: manipulation;
-    }
-
-    /* ORDEN Y POSICIONAMIENTO ESPECÍFICO */
+    /* ORDEN Y POSICIÓN EXACTA DE LOS BOTONES */
     .facebook-link {
         order: 1;
         background: rgba(59, 89, 152, 0.9);
@@ -741,37 +723,31 @@ body {
 
     .tiktok-link {
         order: 3;
-        background: rgba(0, 0, 0, 0.9);
+        background: rgba(0, 0, 0, 0.8);
         color: white;
     }
 
-    /* HOVER EFFECTS */
+    /* ESTILO UNIFICADO DE LOS BOTONES */
+    .social-links a {
+        text-decoration: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        text-align: center;
+        flex: 0 0 auto;
+        width: 100px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
     .social-links a:hover {
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
-    }
-
-    .facebook-link:hover {
-        background: rgba(59, 89, 152, 1);
-    }
-
-    .instagram-link:hover {
-        background: rgba(228, 64, 95, 1);
-    }
-
-    .tiktok-link:hover {
-        background: rgba(0, 0, 0, 1);
-    }
-
-    /* ASEGURAR ÁREAS CLICKEABLES INDEPENDIENTES */
-    .social-links a::before {
-        content: '';
-        position: absolute;
-        top: -5px;
-        left: -2px;
-        right: -2px;
-        bottom: -5px;
-        z-index: -1;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 10px rgba(230, 0, 0, 0.4);
     }
 }
 
@@ -850,76 +826,54 @@ body {
     .social-links {
         display: flex;
         flex-direction: row;
+        justify-content: center;
         align-items: center;
-        justify-content: space-between;
-        gap: var(--spacing-xs);
-        margin: var(--spacing-sm) 0 var(--spacing-xs) 0;
-        position: relative;
-        z-index: 4;
-        order: 2;
-        flex-wrap: nowrap;
+        gap: 12px;
         width: 100%;
-        max-width: 240px;
+        max-width: 220px;
+        margin: 0 auto;
+        padding: 0 10px;
     }
 
     .facebook-link {
-        position: relative;
-        color: var(--color-metal);
-        text-decoration: none;
-        font-size: 1.1rem;
-        letter-spacing: 0.05em;
-        transition: all var(--transition-fast);
-        padding: var(--spacing-xs) var(--spacing-sm);
-        border-radius: 8px;
-        border: 1px solid transparent;
-        background: rgba(255, 255, 255, 0.1);
-        min-height: 52px;
-        min-width: 70px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         order: 1;
-        flex: 1;
+        background: rgba(59, 89, 152, 0.9);
+        color: white;
     }
 
     .instagram-link {
-        position: relative;
-        color: var(--color-metal);
-        text-decoration: none;
-        font-size: 1.1rem;
-        letter-spacing: 0.05em;
-        transition: all var(--transition-fast);
-        padding: var(--spacing-xs) var(--spacing-sm);
-        border-radius: 8px;
-        border: 1px solid transparent;
-        background: rgba(255, 255, 255, 0.1);
-        min-height: 52px;
-        min-width: 70px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         order: 2;
-        flex: 1;
+        background: rgba(228, 64, 95, 0.9);
+        color: white;
     }
 
     .tiktok-link {
-        position: relative;
-        color: var(--color-metal);
+        order: 3;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+    }
+
+    /* ESTILO UNIFICADO DE LOS BOTONES */
+    .social-links a {
         text-decoration: none;
-        font-size: 1.1rem;
-        letter-spacing: 0.05em;
-        transition: all var(--transition-fast);
-        padding: var(--spacing-xs) var(--spacing-sm);
+        padding: 8px 12px;
         border-radius: 8px;
+        font-size: 0.85rem;
+        text-align: center;
+        flex: 0 0 auto;
+        width: 90px;
+        transition: all 0.3s ease;
         border: 1px solid transparent;
-        background: rgba(255, 255, 255, 0.1);
-        min-height: 52px;
-        min-width: 70px;
         display: flex;
         align-items: center;
         justify-content: center;
-        order: 3;
-        flex: 1;
+        box-sizing: border-box;
+    }
+
+    .social-links a:hover {
+        transform: translateY(-3px);
+        border-color: var(--color-primary);
+        box-shadow: 0 0 10px rgba(230, 0, 0, 0.4);
     }
 
 }
